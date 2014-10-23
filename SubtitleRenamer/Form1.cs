@@ -15,6 +15,8 @@ namespace SubtitleRenamer
 {
     public partial class Form1 : Form
     {
+        bool bool_thread_status = false;
+
         FileInfo[] fileinfo1 = new FileInfo[0];
         String[] strDroppedFiles1 = new String[0];
 
@@ -53,22 +55,21 @@ namespace SubtitleRenamer
                 listBox1.Items.Add(newFile[fileinfo1.Length + i].Name);
             }
             fileinfo1 = newFile;
-
+            /*
             if (fileinfo1.Length == 1)
             {
                 int index_of_num = fileinfo1[0].Name.IndexOf("[0-9]");
                 index_of_num = Regex.Match(fileinfo1[0].Name, @"\d\d").Index;
-                Label_index.Text = index_of_num.ToString();
+                //Label_index.Text = index_of_num.ToString();
             }
+            */
         }
 
         private void listBox2_DragDrop(object sender, DragEventArgs e)
         {
             strDroppedFiles2 = (String[])e.Data.GetData(DataFormats.FileDrop, false);
-            //fileinfo2 = new FileInfo[strDroppedFiles2.Length];
             FileInfo[] newFile = new FileInfo[strDroppedFiles2.Length+fileinfo2.Length];
-            //FileName2 = new String[strDroppedFiles2.Length];
-            //FilePath2 = new String[strDroppedFiles2.Length];
+
             for (int i = 0; i < fileinfo2.Length; i++)
             {
                 newFile[i] = fileinfo2[i];
@@ -76,11 +77,7 @@ namespace SubtitleRenamer
 
             for (int i = 0; i < strDroppedFiles2.Length; i++)
             {
-                //int LastIndex_of_file_boundary = strDroppedFiles2[i].LastIndexOf("\\");
-                //FilePath2[i] = strDroppedFiles2[i].Substring(0, LastIndex_of_file_boundary + 1);
-                //FileName2[i] = strDroppedFiles2[i].Substring(LastIndex_of_file_boundary + 1);
                 newFile[fileinfo2.Length + i] = new FileInfo(strDroppedFiles2[i]);
-                //listBox2.Items.Add(FileName2[i]);
                 listBox2.Items.Add(newFile[fileinfo2.Length + i].Name);
             }
             fileinfo2 = newFile;
@@ -118,7 +115,6 @@ namespace SubtitleRenamer
             listBox1.Items.Clear();
             strDroppedFiles1 = new String[0];
             fileinfo1 = new FileInfo[0];
-            Label_index.Text = "대기";
         }
 
         private void button_reset_listbox2_Click(object sender, EventArgs e)
@@ -126,66 +122,64 @@ namespace SubtitleRenamer
             listBox2.Items.Clear();
             strDroppedFiles2 = new String[0];
             fileinfo2 = new FileInfo[0];
-            Label_index.Text = "대기";
         }
 
         private void button_progress_Click(object sender, EventArgs e)
         {
-            if (listBox1.Items.Count != 0 && listBox2.Items.Count != 0)
+            
+            try
             {
-                if (listBox1.Items.Count == 1)
+                if (listBox1.Items.Count != 0 && listBox2.Items.Count != 0)
                 {
-                    for (int i = 0; i < fileinfo2.Length; i++)
+                    if (listBox1.Items.Count == listBox2.Items.Count)
                     {
-                        int index_of_num = Regex.Match(fileinfo1[0].Name, @"\d\d").Index;
+                        progressBar.Maximum = listBox1.Items.Count;
+                        listBox1.SetSelected(0, true);
+                        listBox2.SetSelected(0, true);
 
-                    }
-
-                }
-                else if (listBox1.Items.Count == listBox2.Items.Count)
-                {
-                    listBox1.SetSelected(0, true);
-                    listBox2.SetSelected(0, true);
-
-                    for (int realCount = 0; realCount < fileinfo1.Length; realCount++)
-                    {
-                        bool esc = false;
-                        for (int i = 0; i < fileinfo1.Length && esc == false; i++)
+                        for (int realCount = 0; realCount < fileinfo1.Length; realCount++)
                         {
-                            if (listBox1.SelectedItem.ToString() == fileinfo1[i].Name)
+                            bool esc = false;
+                            for (int i = 0; i < fileinfo1.Length && esc == false; i++)
                             {
-                                for (int j = 0; j < fileinfo2.Length && esc == false; j++)
+                                if (listBox1.SelectedItem.ToString() == fileinfo1[i].Name)
                                 {
-                                    if (listBox2.SelectedItem.ToString() == fileinfo2[j].Name)
+                                    for (int j = 0; j < fileinfo2.Length && esc == false; j++)
                                     {
-                                        int index_ext = fileinfo1[i].Name.LastIndexOf(".");
-                                        String substr = fileinfo1[i].Name.Substring(0, index_ext);
-                                        fileinfo2[j].MoveTo(fileinfo2[j].DirectoryName + "\\" + substr + fileinfo2[j].Extension);
-                                        esc = true;
+                                        if (listBox2.SelectedItem.ToString() == fileinfo2[j].Name)
+                                        {
+                                            int index_ext = fileinfo1[i].Name.LastIndexOf(".");
+                                            String substr = fileinfo1[i].Name.Substring(0, index_ext);
+                                            fileinfo2[j].MoveTo(fileinfo2[j].DirectoryName + "\\" + substr + fileinfo2[j].Extension);
+                                            esc = true;
+                                            progressBar.PerformStep();
+                                        }
                                     }
                                 }
                             }
+                            if (!(listBox1.Items.Count == listBox1.SelectedIndex + 1))
+                            {
+                                listBox1.SetSelected(listBox1.SelectedIndex + 1, true);
+                                listBox1.SetSelected(listBox1.SelectedIndex, false);
+                                listBox2.SetSelected(listBox2.SelectedIndex + 1, true);
+                                listBox2.SetSelected(listBox2.SelectedIndex, false);
+                            }
                         }
-                        if (!(listBox1.Items.Count == listBox1.SelectedIndex + 1))
-                        {
-                            listBox1.SetSelected(listBox1.SelectedIndex + 1, true);
-                            listBox1.SetSelected(listBox1.SelectedIndex, false);
-                            listBox2.SetSelected(listBox2.SelectedIndex + 1, true);
-                            listBox2.SetSelected(listBox2.SelectedIndex, false);
-                        }
+                        listBox1.SetSelected(listBox1.SelectedIndex, false);
+                        listBox2.SetSelected(listBox2.SelectedIndex, false);
+                        Label_status.Text = "변환 완료";
                     }
-                    listBox1.SetSelected(listBox1.SelectedIndex, false);
-                    listBox2.SetSelected(listBox2.SelectedIndex, false);
-                    Label_status.Text = "변환 완료";
+                    else
+                    {
+                        Label_status.Text = "양쪽 파일의 개수가 일치해야 합니다";
+                    }
                 }
                 else
                 {
-                    Label_status.Text = "영상파일 하나를 사용하거나, \n양쪽 파일의 개수가 일치해야 합니다";
+                    Label_status.Text = "파일이 선택되지 않았습니다";
                 }
-            }
-            else
-            {
-                Label_status.Text = "파일이 선택되지 않았습니다";
+            }catch(Exception err){
+                Label_status.Text = err.ToString();
             }
         }
     }

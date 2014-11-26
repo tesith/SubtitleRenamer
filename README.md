@@ -1,4 +1,4 @@
-SubtitleRenamer v1.1
+SubtitleRenamer v1.2 (beta)
 ===============
 
 동영상파일에 맞춰 자막파일의 이름을 변경해주는 프로그램 입니다
@@ -24,3 +24,5 @@ SubtitleRenamer v1.1
 v1.0  초기 리비전
 
 v1.1  미구현된 기능 삭제, ProgressBar 기능 추가
+
+v1.2  (beta) 리팩토링. ListboxController 클래스 추가

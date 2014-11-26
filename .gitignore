@@ -5,16 +5,5 @@
 /SubtitleRenamer/SubtitleRenamer.v12.suo
 /SubtitleRenamer/SubtitleRenamer.csproj
 /SubtitleRenamer/bin
-/SubtitleRenamer/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
-/SubtitleRenamer/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
-/SubtitleRenamer/obj/Debug/TempPE
-/SubtitleRenamer/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-/SubtitleRenamer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/SubtitleRenamer/obj/Debug/SubtitleRenamer.csproj.FileListAbsolute.txt
-/SubtitleRenamer/obj/Debug/SubtitleRenamer.csproj.GenerateResource.Cache
-/SubtitleRenamer/obj/Debug/SubtitleRenamer.csprojResolveAssemblyReference.cache
-/SubtitleRenamer/obj/Debug/SubtitleRenamer.Form1.resources
-/SubtitleRenamer/obj/Debug/SubtitleRenamer.pdb
-/SubtitleRenamer/obj/Debug/SubtitleRenamer.Properties.Resources.resources
-/SubtitleRenamer/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
 /SubtitleRenamer/obj
+/SubtitleRenamer/*.resx

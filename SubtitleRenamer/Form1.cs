@@ -34,92 +34,81 @@ namespace SubtitleRenamer
         {
             String[] strParam = (String[])e.Data.GetData(DataFormats.FileDrop, false);
             String[] strAddedList = new String[strParam.Length];
-            switch (sender.Equals(listBox1))
-            {
-                case true:      //영상파일 리스트의 경우
-                    strAddedList = listMovie.addList(strParam);
-                    for (int i = 0; i < strAddedList.Length; i++)
-                    {
-                        listBox1.Items.Add(strAddedList[i]);
-                    }
-                    break;
-                case false:     //자막파일 리스트의 경우
-                    strAddedList = listSubtitle.addList(strParam);
 
-                    for (int i = 0; i < strAddedList.Length; i++)
-                    {
-                        listBox2.Items.Add(strAddedList[i]);
-                    }
-                    break;
+            if (sender.Equals(listBox1))
+            {   //영상파일 리스트의 경우
+                strAddedList = listMovie.addList(strParam);
+                for (int i = 0; i < strAddedList.Length; i++)
+                {
+                    listBox1.Items.Add(strAddedList[i]);
+                }
+            }
+            else if (sender.Equals(listBox2))
+            {   //자막파일 리스트의 경우
+                strAddedList = listSubtitle.addList(strParam);
+
+                for (int i = 0; i < strAddedList.Length; i++)
+                {
+                    listBox2.Items.Add(strAddedList[i]);
+                }
+            }
+            else
+            {
+                Label_status.Text = "Error 01: listBox_DragDrop Exception";
             }
         }
-        /*
-        private void listBox2_DragDrop(object sender, DragEventArgs e)
-        {
-            String[] strParam = (String[])e.Data.GetData(DataFormats.FileDrop, false);
-            String[] strAddedList = new String[strParam.Length];
-            strAddedList = listSubtitle.addList(strParam);
-
-            for (int i = 0; i < strAddedList.Length; i++)
-            {
-                listBox2.Items.Add(strAddedList[i]);
-            }
-
-            /*
-            strDroppedFiles2 = (String[])e.Data.GetData(DataFormats.FileDrop, false);
-            FileInfo[] newFile = new FileInfo[strDroppedFiles2.Length+fileinfo2.Length];
-
-            for (int i = 0; i < fileinfo2.Length; i++)
-            {
-                newFile[i] = fileinfo2[i];
-            }
-
-            for (int i = 0; i < strDroppedFiles2.Length; i++)
-            {
-                newFile[fileinfo2.Length + i] = new FileInfo(strDroppedFiles2[i]);
-                listBox2.Items.Add(newFile[fileinfo2.Length + i].Name);
-            }
-            fileinfo2 = newFile;
-            
-        }
-        */
+       
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBox1.Checked)
+            if (sender.Equals(checkBox1))
             {
-                listBox1.Sorted = true;
-            }else{
-                listBox1.Sorted = false;
+                if (checkBox1.Checked)
+                {
+                    listBox1.Sorted = true;
+                }
+                else
+                {
+                    listBox1.Sorted = false;
+                }
             }
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox2.Checked)
+            else if(sender.Equals(checkBox2))
             {
-                listBox2.Sorted = true;
+                if (checkBox2.Checked)
+                {
+                    listBox2.Sorted = true;
+                }
+                else
+                {
+                    listBox2.Sorted = false;
+                }
             }
             else
             {
-                listBox2.Sorted = false;
+                Label_status.Text = "Error 02: checkBox_CheckedChanged Exception";
             }
         }
 
-        private void button_reset_listbox1_Click(object sender, EventArgs e)
+        private void button_reset_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
-            listMovie.Clear();
-        }
-
-        private void button_reset_listbox2_Click(object sender, EventArgs e)
-        {
-            listBox2.Items.Clear();
-            listSubtitle.Clear();
+            if (sender.Equals(button_reset_listbox1))
+            {
+                listBox1.Items.Clear();
+                listMovie.Clear();
+            }
+            else if(sender.Equals(button_reset_listbox2))
+            {
+                listBox2.Items.Clear();
+                listSubtitle.Clear();
+            }
+            else
+            {
+                Label_status.Text = "Error 03: button_reset_Click Exception";
+            }
         }
 
         private void button_progress_Click(object sender, EventArgs e)

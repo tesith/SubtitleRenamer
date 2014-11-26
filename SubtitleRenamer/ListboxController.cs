@@ -29,21 +29,21 @@ namespace SubtitleRenamer
          */
         public String[] addList(string[] strDroppedFiles)
         {
-            String[] retOKstring = new String[strDroppedFiles.Length];
-            FileInfo[] newFile = new FileInfo[strDroppedFiles.Length + mFileinfo.Length];
+            String[] strReturn = new String[strDroppedFiles.Length];
+            FileInfo[] tmpFile = new FileInfo[strDroppedFiles.Length + mFileinfo.Length];
 
             for (int i = 0; i < mFileinfo.Length; i++)
             {
-                newFile[i] = mFileinfo[i];
+                tmpFile[i] = mFileinfo[i];
             }
 
             for (int i = 0; i < strDroppedFiles.Length; i++)
             {
-                newFile[mFileinfo.Length + i] = new FileInfo(strDroppedFiles[i]);
-                retOKstring[i] = newFile[mFileinfo.Length + i].Name;
+                tmpFile[mFileinfo.Length + i] = new FileInfo(strDroppedFiles[i]);
+                strReturn[i] = tmpFile[mFileinfo.Length + i].Name;
             }
-            mFileinfo = newFile;
-            return retOKstring;
+            mFileinfo = tmpFile;
+            return strReturn;
         }
     }
 }

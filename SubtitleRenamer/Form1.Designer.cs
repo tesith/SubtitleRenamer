@@ -101,7 +101,7 @@
             this.checkBox1.TabIndex = 7;
             this.checkBox1.Text = "자동정렬";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // checkBox2
             // 
@@ -114,7 +114,7 @@
             this.checkBox2.TabIndex = 8;
             this.checkBox2.Text = "자동정렬";
             this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
             // 
             // button_reset_listbox1
             // 
@@ -124,7 +124,7 @@
             this.button_reset_listbox1.TabIndex = 9;
             this.button_reset_listbox1.Text = "초기화";
             this.button_reset_listbox1.UseVisualStyleBackColor = true;
-            this.button_reset_listbox1.Click += new System.EventHandler(this.button_reset_listbox1_Click);
+            this.button_reset_listbox1.Click += new System.EventHandler(this.button_reset_Click);
             // 
             // button_reset_listbox2
             // 
@@ -134,7 +134,7 @@
             this.button_reset_listbox2.TabIndex = 10;
             this.button_reset_listbox2.Text = "초기화";
             this.button_reset_listbox2.UseVisualStyleBackColor = true;
-            this.button_reset_listbox2.Click += new System.EventHandler(this.button_reset_listbox2_Click);
+            this.button_reset_listbox2.Click += new System.EventHandler(this.button_reset_Click);
             // 
             // button_progress
             // 

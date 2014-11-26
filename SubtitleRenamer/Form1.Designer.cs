@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox2 = new System.Windows.Forms.ListBox();
@@ -53,7 +54,7 @@
             this.listBox1.Size = new System.Drawing.Size(330, 256);
             this.listBox1.Sorted = true;
             this.listBox1.TabIndex = 0;
-            this.listBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox1_DragDrop);
+            this.listBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
             this.listBox1.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             // 
             // label1
@@ -77,7 +78,7 @@
             this.listBox2.Size = new System.Drawing.Size(330, 256);
             this.listBox2.Sorted = true;
             this.listBox2.TabIndex = 3;
-            this.listBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox2_DragDrop);
+            this.listBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
             this.listBox2.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             // 
             // label2
@@ -180,10 +181,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.ShowIcon = false;
-            this.Text = "Subtitle Renamer v1.1";
+            this.Text = "Subtitle Renamer v1.2";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

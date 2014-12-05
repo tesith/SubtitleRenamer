@@ -214,6 +214,7 @@
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 20;
             this.label3.Text = "Debug";
+            this.label3.Visible = false;
             // 
             // SubtitleRenamer
             // 

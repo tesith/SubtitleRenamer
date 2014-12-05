@@ -1,4 +1,6 @@
-﻿using System;
+﻿#undef DEBUG
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 //using System.ComponentModel;
@@ -16,6 +18,7 @@ namespace SubtitleRenamer
 {
     public partial class SubtitleRenamer : Form
     {
+        
         //bool bool_thread_status = false;
         ListboxController listMovie = new ListboxController();
         ListboxController listSubtitle = new ListboxController();
@@ -23,12 +26,12 @@ namespace SubtitleRenamer
         public SubtitleRenamer()
         {
             InitializeComponent();
-            //사용자정의컨트롤
-            //this.InitializeComponentEx();
         }
+
 
         private void button_listupdown(object sender, EventArgs e)
         {
+#if DEBUG
            if (sender.Equals(button_mov_list_up))
            {
                int IndexOfSelected = listBox1.SelectedIndex;
@@ -48,6 +51,7 @@ namespace SubtitleRenamer
            }else if(sender.Equals(button_mov_list_down)){
 
            }
+#endif
         }
 
         private void listBox_DragOver(object sender, DragEventArgs e)
@@ -87,6 +91,9 @@ namespace SubtitleRenamer
        
         private void Form1_Load(object sender, EventArgs e)
         {
+#if DEBUG
+            label3.Visible = true;
+#endif
         }
 
         private void checkBox_CheckedChanged(object sender, EventArgs e)
@@ -139,9 +146,10 @@ namespace SubtitleRenamer
 
         private void button_progress_Click(object sender, EventArgs e)
         {
+#if DEBUG
             DateTime dtStart = DateTime.Now;
             DateTime dtEnd;
-
+#endif
             try
             {
                 if (listBox1.Items.Count != 0 && listBox2.Items.Count != 0)
@@ -159,42 +167,6 @@ namespace SubtitleRenamer
                             listSubtitle.mFileinfo[i].MoveTo(listSubtitle.mFileinfo[i].DirectoryName + "\\" + FileName_exclude_Extention + listSubtitle.mFileinfo[i].Extension);
                             progressBar.PerformStep();
                         }
-                        
-                        /*
-                            listBox1.SetSelected(0, true);
-                            listBox2.SetSelected(0, true);
-
-                            for (int realCount = 0; realCount < listMovie.mFileinfo.Length; realCount++)
-                            {
-                                bool esc = false;
-                                for (int i = 0; i < listMovie.mFileinfo.Length && esc == false; i++)
-                                {
-                                    if (listBox1.SelectedItem.ToString() == listMovie.mFileinfo[i].Name)
-                                    {
-                                        for (int j = 0; j < listSubtitle.mFileinfo.Length && esc == false; j++)
-                                        {
-                                            if (listBox2.SelectedItem.ToString() == listSubtitle.mFileinfo[j].Name)
-                                            {
-                                                int index_ext = listMovie.mFileinfo[i].Name.LastIndexOf(".");
-                                                String substr = listMovie.mFileinfo[i].Name.Substring(0, index_ext);
-                                                listSubtitle.mFileinfo[j].MoveTo(listSubtitle.mFileinfo[j].DirectoryName + "\\" + substr + listSubtitle.mFileinfo[j].Extension);
-                                                esc = true;
-                                                progressBar.PerformStep();
-                                            }
-                                        }
-                                    }
-                                }
-                                if (!(listBox1.Items.Count == listBox1.SelectedIndex + 1))
-                                {
-                                    listBox1.SetSelected(listBox1.SelectedIndex + 1, true);
-                                    listBox1.SetSelected(listBox1.SelectedIndex, false);
-                                    listBox2.SetSelected(listBox2.SelectedIndex + 1, true);
-                                    listBox2.SetSelected(listBox2.SelectedIndex, false);
-                                }
-                            }
-                            listBox1.SetSelected(listBox1.SelectedIndex, false);
-                            listBox2.SetSelected(listBox2.SelectedIndex, false);
-                        */
                             
                         Label_status.Text = "변환 완료";
                         progressBar.Value = 0;
@@ -209,12 +181,12 @@ namespace SubtitleRenamer
                     Label_status.Text = "파일이 선택되지 않았습니다";
                 }
             }catch(Exception err){
-                //Label_status.Text = err.ToString();
                 MessageBox.Show(err.ToString());
             }
-
+#if DEBUG
             dtEnd = DateTime.Now;
             label3.Text = (dtEnd - dtStart).ToString();
+#endif
         }
 
     }

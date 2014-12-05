@@ -53,6 +53,10 @@ namespace SubtitleRenamer
             tmpFile = mFileinfo;
 
             mFileinfo = new FileInfo[obj.Items.Count];
+
+            /*
+             * 시간잡아먹는 주범
+             */
             for(int i = 0 ; i < obj.Items.Count ; i++){
                 for (int j = 0; j < obj.Items.Count; j++)
                 {
@@ -62,15 +66,6 @@ namespace SubtitleRenamer
                     }
                 }
             }
-
-            /*
-            this.Clear();
-            mFileinfo = new FileInfo[obj.Items.Count];
-            for (int i = 0; i < obj.Items.Count ; i++)
-            {
-                mFileinfo[i] = new FileInfo(obj.Items[i].ToString());
-            }
-            */
         }
     }
 

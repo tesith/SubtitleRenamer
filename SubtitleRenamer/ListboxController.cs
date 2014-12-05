@@ -9,15 +9,15 @@ using System.Windows.Forms;
 
 namespace SubtitleRenamer
 {
-    public class ListboxController
+    public class ListboxController : ListBox
     {
         public FileInfo[] mFileinfo;
-
+        
         public ListboxController()
         {
             mFileinfo = new FileInfo[0];
         }
-
+        
         public void Clear()
         {
             mFileinfo = new FileInfo[0];
@@ -25,9 +25,9 @@ namespace SubtitleRenamer
 
         /*
          * 파일 리스트를 추가하는 함수
-         * 추가에 성공한 파일 리스트를 String[] 형으로 반환한다.
+         * 추가에 성공한 파일 리스트를 FileInfo[] 형으로 반환한다.
          */
-        public String[] addList(string[] strDroppedFiles)
+        public String[] AddList(string[] strDroppedFiles)
         {
             String[] strReturn = new String[strDroppedFiles.Length];
             FileInfo[] tmpFile = new FileInfo[strDroppedFiles.Length + mFileinfo.Length];
@@ -42,8 +42,38 @@ namespace SubtitleRenamer
                 tmpFile[mFileinfo.Length + i] = new FileInfo(strDroppedFiles[i]);
                 strReturn[i] = tmpFile[mFileinfo.Length + i].Name;
             }
+
             mFileinfo = tmpFile;
             return strReturn;
         }
+
+        public void Sync(ListBox obj)
+        {
+            FileInfo[] tmpFile;
+            tmpFile = mFileinfo;
+
+            mFileinfo = new FileInfo[obj.Items.Count];
+            for(int i = 0 ; i < obj.Items.Count ; i++){
+                for (int j = 0; j < obj.Items.Count; j++)
+                {
+                    if (obj.Items[i].ToString() == tmpFile[j].Name)
+                    {
+                        mFileinfo[i] = tmpFile[j];
+                    }
+                }
+            }
+
+            /*
+            this.Clear();
+            mFileinfo = new FileInfo[obj.Items.Count];
+            for (int i = 0; i < obj.Items.Count ; i++)
+            {
+                mFileinfo[i] = new FileInfo(obj.Items[i].ToString());
+            }
+            */
+        }
     }
+
+
+
 }

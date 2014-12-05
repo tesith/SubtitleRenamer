@@ -11,7 +11,6 @@ using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 //using System.Text.RegularExpressions;   //정규표현식
 
 namespace SubtitleRenamer

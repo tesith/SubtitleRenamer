@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SubtitleRenamer));
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBoxMovie = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBoxSubtitle = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -47,20 +47,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // listBox1
+            // listBoxMovie
             // 
-            this.listBox1.AllowDrop = true;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(14, 25);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox1.Size = new System.Drawing.Size(328, 256);
-            this.listBox1.Sorted = true;
-            this.listBox1.TabIndex = 0;
-            this.listBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
-            this.listBox1.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
+            this.listBoxMovie.AllowDrop = true;
+            this.listBoxMovie.FormattingEnabled = true;
+            this.listBoxMovie.HorizontalScrollbar = true;
+            this.listBoxMovie.ItemHeight = 12;
+            this.listBoxMovie.Location = new System.Drawing.Point(14, 25);
+            this.listBoxMovie.Name = "listBoxMovie";
+            this.listBoxMovie.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxMovie.Size = new System.Drawing.Size(328, 256);
+            this.listBoxMovie.Sorted = true;
+            this.listBoxMovie.TabIndex = 0;
+            this.listBoxMovie.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
+            this.listBoxMovie.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             // 
             // label1
             // 
@@ -71,20 +71,20 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "자막파일";
             // 
-            // listBox2
+            // listBoxSubtitle
             // 
-            this.listBox2.AllowDrop = true;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.HorizontalScrollbar = true;
-            this.listBox2.ItemHeight = 12;
-            this.listBox2.Location = new System.Drawing.Point(348, 25);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox2.Size = new System.Drawing.Size(330, 256);
-            this.listBox2.Sorted = true;
-            this.listBox2.TabIndex = 3;
-            this.listBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
-            this.listBox2.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
+            this.listBoxSubtitle.AllowDrop = true;
+            this.listBoxSubtitle.FormattingEnabled = true;
+            this.listBoxSubtitle.HorizontalScrollbar = true;
+            this.listBoxSubtitle.ItemHeight = 12;
+            this.listBoxSubtitle.Location = new System.Drawing.Point(348, 25);
+            this.listBoxSubtitle.Name = "listBoxSubtitle";
+            this.listBoxSubtitle.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxSubtitle.Size = new System.Drawing.Size(330, 256);
+            this.listBoxSubtitle.Sorted = true;
+            this.listBoxSubtitle.TabIndex = 3;
+            this.listBoxSubtitle.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
+            this.listBoxSubtitle.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             // 
             // label2
             // 
@@ -234,14 +234,14 @@
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.listBoxSubtitle);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.listBoxMovie);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SubtitleRenamer";
-            this.Text = "Subtitle Renamer v1.2";
+            this.Text = "Subtitle Renamer v1.3";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Click += new System.EventHandler(this.button_listupdown);
             this.ResumeLayout(false);
@@ -252,7 +252,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox listBoxSubtitle;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
@@ -265,7 +265,7 @@
         private System.Windows.Forms.Button button_mov_list_down;
         private System.Windows.Forms.Button button_sub_list_up;
         private System.Windows.Forms.Button button_sub_list_down;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBoxMovie;
         private System.Windows.Forms.Label label3;
     }
 }

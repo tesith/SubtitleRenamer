@@ -11,52 +11,52 @@ namespace SubtitleRenamer
 {
     public class ListboxController
     {
-        public FileInfo[] mFileinfo;
+        public FileInfo[] m_aFileinfo;
 
         public ListboxController()
         {
-            mFileinfo = new FileInfo[0];
+            m_aFileinfo = new FileInfo[0];
         }
 
         public void Clear()
         {
-            mFileinfo = new FileInfo[0];
+            m_aFileinfo = new FileInfo[0];
         }
 
         /*
-            * 파일 리스트를 추가하는 함수
-            * 추가에 성공한 파일 리스트를 FileInfo[] 형으로 반환한다.
-            */
+        * 파일 리스트를 추가하는 함수
+        * 추가에 성공한 파일 리스트를 FileInfo[] 형으로 반환한다.
+        */
         public String[] AddList(string[] strDroppedFiles)
         {
             String[] strReturn = new String[strDroppedFiles.Length];
-            FileInfo[] tmpFile = new FileInfo[strDroppedFiles.Length + mFileinfo.Length];
+            FileInfo[] tmpFile = new FileInfo[strDroppedFiles.Length + m_aFileinfo.Length];
 
-            for (int i = 0; i < mFileinfo.Length; i++)
+            for (int i = 0; i < m_aFileinfo.Length; i++)
             {
-                tmpFile[i] = mFileinfo[i];
+                tmpFile[i] = m_aFileinfo[i];
             }
 
             for (int i = 0; i < strDroppedFiles.Length; i++)
             {
-                tmpFile[mFileinfo.Length + i] = new FileInfo(strDroppedFiles[i]);
-                strReturn[i] = tmpFile[mFileinfo.Length + i].Name;
+                tmpFile[m_aFileinfo.Length + i] = new FileInfo(strDroppedFiles[i]);
+                strReturn[i] = tmpFile[m_aFileinfo.Length + i].Name;
             }
             
 
-            mFileinfo = tmpFile;
+            m_aFileinfo = tmpFile;
             return strReturn;
         }
 
         public void Sync(ListBox obj)
         {
             FileInfo[] tmpFile;
-            tmpFile = mFileinfo;
+            tmpFile = m_aFileinfo;
             
-            mFileinfo = new FileInfo[obj.Items.Count];
+            m_aFileinfo = new FileInfo[obj.Items.Count];
             for(int i = 0; i < obj.Items.Count; i++){
                 int index = obj.FindString(tmpFile[i].Name);
-                mFileinfo[index] = tmpFile[i];
+                m_aFileinfo[index] = tmpFile[i];
             }
 
             

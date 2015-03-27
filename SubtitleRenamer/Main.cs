@@ -1,4 +1,4 @@
-﻿#undef DEBUG 
+﻿#define DEBUG 
 
 using System;
 using System.IO;
@@ -26,36 +26,68 @@ namespace SubtitleRenamer
             InitializeComponent();
         }
 
-
         private void button_listupdown(object sender, EventArgs e)
         {
-#if DEBUG
-           if (sender.Equals(button_mov_list_up))
-           {
-               int IndexOfSelected = listBoxMovie.SelectedIndex;
-               int NextIndex = IndexOfSelected + 1;
-               object tmplist = listBoxMovie.SelectedItem;
+            String tmplist;
+            int IndexOfSelected;
+            int IndexOfPrev;
+            int IndexOfNext;
 
-               /*
-               if (IndexOfSelected > -1 && IndexOfSelected != listBox1.Items.Count-1)
-               {
-                   listBox1.Items.Insert(IndexOfSelected + 1, listBox1.SelectedItem);
-                   listBox1.ClearSelected();
-                   listBox1.SetSelected(IndexOfSelected + 1, true);
-                   listBox1.Items.RemoveAt(IndexOfSelected);
-                   Label_status.Text = "변환됨";
-               }
-               */
-           }else if(sender.Equals(button_mov_list_down)){
+            if (sender.Equals(button_mov_list_up))
+            {
+                if (listBoxMovie.SelectedIndex < 1) return;
+                if (checkBox1.Checked == true) checkBox1.Checked = false;
 
-           }
-#endif
+                tmplist = (String)listBoxMovie.SelectedItem;
+                IndexOfSelected = listBoxMovie.SelectedIndex;
+                IndexOfPrev = IndexOfSelected - 1;
+
+                listBoxMovie.Items.RemoveAt(IndexOfSelected);
+                listBoxMovie.Items.Insert(IndexOfPrev, tmplist);
+                listBoxMovie.SetSelected(IndexOfPrev, true);
+            }else if(sender.Equals(button_mov_list_down)){
+                if (listBoxMovie.SelectedIndex >= listBoxMovie.Items.Count -1) return;
+                if (checkBox1.Checked == true) checkBox1.Checked = false;
+
+                tmplist = (String)listBoxMovie.SelectedItem;
+                IndexOfSelected = listBoxMovie.SelectedIndex;
+                IndexOfNext = IndexOfSelected + 1;
+
+                listBoxMovie.Items.RemoveAt(IndexOfSelected);
+                listBoxMovie.Items.Insert(IndexOfNext, tmplist);
+                listBoxMovie.SetSelected(IndexOfNext, true);
+            }
+            else if (sender.Equals(button_sub_list_up))
+            {
+                if (listBoxSubtitle.SelectedIndex < 1) return;
+                if (checkBox2.Checked == true) checkBox2.Checked = false;
+
+                tmplist = (String)listBoxSubtitle.SelectedItem;
+                IndexOfSelected = listBoxSubtitle.SelectedIndex;
+                IndexOfPrev = IndexOfSelected - 1;
+
+                listBoxSubtitle.Items.RemoveAt(IndexOfSelected);
+                listBoxSubtitle.Items.Insert(IndexOfPrev, tmplist);
+                listBoxSubtitle.SetSelected(IndexOfPrev, true);
+            }
+            else if (sender.Equals(button_sub_list_down))
+            {
+                if (listBoxSubtitle.SelectedIndex >= listBoxSubtitle.Items.Count - 1) return;
+                if (checkBox2.Checked == true) checkBox2.Checked = false;
+
+                tmplist = (String)listBoxSubtitle.SelectedItem;
+                IndexOfSelected = listBoxSubtitle.SelectedIndex;
+                IndexOfNext = IndexOfSelected + 1;
+
+                listBoxSubtitle.Items.RemoveAt(IndexOfSelected);
+                listBoxSubtitle.Items.Insert(IndexOfNext, tmplist);
+                listBoxSubtitle.SetSelected(IndexOfNext, true);
+            }
         }
 
         private void listBox_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
-            
         }
 
         private void listBox_DragDrop(object sender, DragEventArgs e)
@@ -66,20 +98,14 @@ namespace SubtitleRenamer
             if (sender.Equals(listBoxMovie))
             {   //영상파일 리스트의 경우
                 FileAddedList = listMovie.AddList(strParam);                            //listMovie에 추가 시도 후, 성공한 녀석만 뽑음
-                
                 for (int i = 0; i < FileAddedList.Length; i++)
-                {
                     listBoxMovie.Items.Add(FileAddedList[i]);                           //성공한 녀석들 리스트를 listBox1에 업데이트
-                }
             }
             else if (sender.Equals(listBoxSubtitle))
             {   //자막파일 리스트의 경우
                 FileAddedList = listSubtitle.AddList(strParam);                         //listSubtitle에 추가 시도 후, 성공한 녀석만 뽑음
-                
                 for (int i = 0; i < FileAddedList.Length; i++)
-                {
                     listBoxSubtitle.Items.Add(FileAddedList[i]);                        //성공한 녀석들 리스트를 listBox2에 업데이트
-                }
             }
             else
             {
@@ -99,29 +125,19 @@ namespace SubtitleRenamer
             if (sender.Equals(checkBox1))
             {
                 if (checkBox1.Checked)
-                {
                     listBoxMovie.Sorted = true;
-                }
                 else
-                {
                     listBoxMovie.Sorted = false;
-                }
             }
-            else if(sender.Equals(checkBox2))
+            else if (sender.Equals(checkBox2))
             {
                 if (checkBox2.Checked)
-                {
                     listBoxSubtitle.Sorted = true;
-                }
                 else
-                {
                     listBoxSubtitle.Sorted = false;
-                }
             }
             else
-            {
                 Label_status.Text = "Error 02: checkBox_CheckedChanged Exception";
-            }
         }
 
         private void button_reset_Click(object sender, EventArgs e)
@@ -158,11 +174,11 @@ namespace SubtitleRenamer
                         listSubtitle.Sync(listBoxSubtitle);
                         progressBar.Maximum = listBoxMovie.Items.Count;
                         
-                        for (int i = 0; i < listMovie.mFileinfo.Length; i++)
+                        for (int i = 0; i < listMovie.m_aFileinfo.Length; i++)
                         {
-                            int index_ext = listMovie.mFileinfo[i].Name.LastIndexOf(".");   //확장자 위치를 기억
-                            String FileName_Name = listMovie.mFileinfo[i].Name.Substring(0, index_ext);    
-                            listSubtitle.mFileinfo[i].MoveTo(listSubtitle.mFileinfo[i].DirectoryName + "\\" + FileName_Name + listSubtitle.mFileinfo[i].Extension);
+                            int index_ext = listMovie.m_aFileinfo[i].Name.LastIndexOf(".");   //확장자 위치를 기억
+                            String File_Name = listMovie.m_aFileinfo[i].Name.Substring(0, index_ext);    
+                            listSubtitle.m_aFileinfo[i].MoveTo(listSubtitle.m_aFileinfo[i].DirectoryName + "\\" + File_Name + listSubtitle.m_aFileinfo[i].Extension);
                             progressBar.PerformStep();
                         }
                         
@@ -170,14 +186,10 @@ namespace SubtitleRenamer
                         progressBar.Value = 0;
                     }
                     else
-                    {
                         Label_status.Text = "양쪽 파일의 개수가 일치해야 합니다";
-                    }
                 }
                 else
-                {
                     Label_status.Text = "파일이 선택되지 않았습니다";
-                }
             }catch(Exception err){
                 MessageBox.Show(err.ToString());
             }

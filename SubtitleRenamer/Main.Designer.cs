@@ -187,6 +187,7 @@
             this.button_mov_list_down.TabIndex = 17;
             this.button_mov_list_down.Text = "↓";
             this.button_mov_list_down.UseVisualStyleBackColor = true;
+            this.button_mov_list_down.Click += new System.EventHandler(this.button_listupdown);
             // 
             // button_sub_list_up
             // 
@@ -196,6 +197,7 @@
             this.button_sub_list_up.TabIndex = 18;
             this.button_sub_list_up.Text = "↑";
             this.button_sub_list_up.UseVisualStyleBackColor = true;
+            this.button_sub_list_up.Click += new System.EventHandler(this.button_listupdown);
             // 
             // button_sub_list_down
             // 
@@ -205,6 +207,7 @@
             this.button_sub_list_down.TabIndex = 19;
             this.button_sub_list_down.Text = "↓";
             this.button_sub_list_down.UseVisualStyleBackColor = true;
+            this.button_sub_list_down.Click += new System.EventHandler(this.button_listupdown);
             // 
             // label3
             // 

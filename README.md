@@ -22,6 +22,9 @@ SubtitleRenamer v1.3
 **변경이력**
 
 v1.0  초기 리비전
+
 v1.1  미구현된 기능 삭제, ProgressBar 기능 추가
+
 v1.2  (beta) 리팩토링. ListboxController 클래스 추가
+
 v1.3  더 효율적인 알고리즘으로 수정

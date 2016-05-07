@@ -1,161 +1,19 @@
-﻿#undef DEBUG 
-
-using System;
+﻿using System;
 using System.IO;
-using System.Collections.Generic;
-//using System.ComponentModel;
-using System.Data;
-//using System.Drawing;
-using System.Linq;
-using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
-
-//using System.Text.RegularExpressions;   //정규표현식
 
 namespace SubtitleRenamer
 {
     public partial class SubtitleRenamer : Form
     {
-        //bool bool_thread_status = false;
-        ListboxController listMovie = new ListboxController();
-        ListboxController listSubtitle = new ListboxController();
-        
+        ListboxController MovieController;
+        ListboxController SubtitleController;
+
         public SubtitleRenamer()
         {
             InitializeComponent();
-        }
-
-        private void button_listupdown(object sender, EventArgs e)
-        {
-            String tmplist;
-            int IndexOfSelected;
-            int IndexOfPrev;
-            int IndexOfNext;
-
-            if (sender.Equals(button_mov_list_up))
-            {
-                if (listBoxMovie.SelectedIndex < 1) return;
-                if (checkBox1.Checked == true) checkBox1.Checked = false;
-
-                tmplist = (String)listBoxMovie.SelectedItem;
-                IndexOfSelected = listBoxMovie.SelectedIndex;
-                IndexOfPrev = IndexOfSelected - 1;
-
-                listBoxMovie.Items.RemoveAt(IndexOfSelected);
-                listBoxMovie.Items.Insert(IndexOfPrev, tmplist);
-                listBoxMovie.SetSelected(IndexOfPrev, true);
-            }else if(sender.Equals(button_mov_list_down)){
-                if (listBoxMovie.SelectedIndex >= listBoxMovie.Items.Count -1) return;
-                if (checkBox1.Checked == true) checkBox1.Checked = false;
-
-                tmplist = (String)listBoxMovie.SelectedItem;
-                IndexOfSelected = listBoxMovie.SelectedIndex;
-                IndexOfNext = IndexOfSelected + 1;
-
-                listBoxMovie.Items.RemoveAt(IndexOfSelected);
-                listBoxMovie.Items.Insert(IndexOfNext, tmplist);
-                listBoxMovie.SetSelected(IndexOfNext, true);
-            }
-            else if (sender.Equals(button_sub_list_up))
-            {
-                if (listBoxSubtitle.SelectedIndex < 1) return;
-                if (checkBox2.Checked == true) checkBox2.Checked = false;
-
-                tmplist = (String)listBoxSubtitle.SelectedItem;
-                IndexOfSelected = listBoxSubtitle.SelectedIndex;
-                IndexOfPrev = IndexOfSelected - 1;
-
-                listBoxSubtitle.Items.RemoveAt(IndexOfSelected);
-                listBoxSubtitle.Items.Insert(IndexOfPrev, tmplist);
-                listBoxSubtitle.SetSelected(IndexOfPrev, true);
-            }
-            else if (sender.Equals(button_sub_list_down))
-            {
-                if (listBoxSubtitle.SelectedIndex >= listBoxSubtitle.Items.Count - 1) return;
-                if (checkBox2.Checked == true) checkBox2.Checked = false;
-
-                tmplist = (String)listBoxSubtitle.SelectedItem;
-                IndexOfSelected = listBoxSubtitle.SelectedIndex;
-                IndexOfNext = IndexOfSelected + 1;
-
-                listBoxSubtitle.Items.RemoveAt(IndexOfSelected);
-                listBoxSubtitle.Items.Insert(IndexOfNext, tmplist);
-                listBoxSubtitle.SetSelected(IndexOfNext, true);
-            }
-        }
-
-        private void listBox_DragOver(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
-
-        private void listBox_DragDrop(object sender, DragEventArgs e)
-        {
-            String[] strParam = (String[])e.Data.GetData(DataFormats.FileDrop, false);  //드래그앤드랍 된 파일리스트를 받아냄
-            String[] FileAddedList = new String[strParam.Length];                       //받은 개수만큼 배열생성
-
-            if (sender.Equals(listBoxMovie))
-            {   //영상파일 리스트의 경우
-                FileAddedList = listMovie.AddList(strParam);                            //listMovie에 추가 시도 후, 성공한 녀석만 뽑음
-                for (int i = 0; i < FileAddedList.Length; i++)
-                    listBoxMovie.Items.Add(FileAddedList[i]);                           //성공한 녀석들 리스트를 listBox1에 업데이트
-            }
-            else if (sender.Equals(listBoxSubtitle))
-            {   //자막파일 리스트의 경우
-                FileAddedList = listSubtitle.AddList(strParam);                         //listSubtitle에 추가 시도 후, 성공한 녀석만 뽑음
-                for (int i = 0; i < FileAddedList.Length; i++)
-                    listBoxSubtitle.Items.Add(FileAddedList[i]);                        //성공한 녀석들 리스트를 listBox2에 업데이트
-            }
-            else
-            {
-                Label_status.Text = "Error 01: listBox_DragDrop Exception";
-            }
-        }
-       
-        private void Form1_Load(object sender, EventArgs e)
-        {
-#if DEBUG
-            label3.Visible = true;
-#endif
-        }
-
-        private void checkBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (sender.Equals(checkBox1))
-            {
-                if (checkBox1.Checked)
-                    listBoxMovie.Sorted = true;
-                else
-                    listBoxMovie.Sorted = false;
-            }
-            else if (sender.Equals(checkBox2))
-            {
-                if (checkBox2.Checked)
-                    listBoxSubtitle.Sorted = true;
-                else
-                    listBoxSubtitle.Sorted = false;
-            }
-            else
-                Label_status.Text = "Error 02: checkBox_CheckedChanged Exception";
-        }
-
-        private void button_reset_Click(object sender, EventArgs e)
-        {
-            if (sender.Equals(button_reset_listbox1))
-            {
-                listBoxMovie.Items.Clear();
-                listMovie.Clear();
-            }
-            else if(sender.Equals(button_reset_listbox2))
-            {
-                listBoxSubtitle.Items.Clear();
-                listSubtitle.Clear();
-            }
-            else
-            {
-                Label_status.Text = "Error 03: button_reset_Click Exception";
-            }
+            MovieController = new ListboxController();
+            SubtitleController = new ListboxController();
         }
 
         private void button_progress_Click(object sender, EventArgs e)
@@ -166,22 +24,28 @@ namespace SubtitleRenamer
 #endif
             try
             {
-                if (listBoxMovie.Items.Count != 0 && listBoxSubtitle.Items.Count != 0)     // 파일 올라갔는지 확인
+                // 파일 올라갔는지 확인
+                if (MovieList.Items.Count != 0 && SubtitleList.Items.Count != 0)
                 {
-                    if (listBoxMovie.Items.Count == listBoxSubtitle.Items.Count)           // 파일 개수 일치 확인
+                    // 파일 개수 일치 확인
+                    if (MovieList.Items.Count == SubtitleList.Items.Count)
                     {
-                        listMovie.Sync(listBoxMovie);
-                        listSubtitle.Sync(listBoxSubtitle);
-                        progressBar.Maximum = listBoxMovie.Items.Count;
-                        
-                        for (int i = 0; i < listMovie.m_aFileinfo.Length; i++)
+                        MovieController.Sync(MovieList);
+                        SubtitleController.Sync(SubtitleList);
+                        progressBar.Maximum = MovieList.Items.Count;
+
+                        for (int i = 0; i < MovieController.mFiles.Length; ++i)
                         {
-                            int index_ext = listMovie.m_aFileinfo[i].Name.LastIndexOf(".");   //확장자 위치를 기억
-                            String File_Name = listMovie.m_aFileinfo[i].Name.Substring(0, index_ext);    
-                            listSubtitle.m_aFileinfo[i].MoveTo(listSubtitle.m_aFileinfo[i].DirectoryName + "\\" + File_Name + listSubtitle.m_aFileinfo[i].Extension);
+                            int indexExtension = MovieController.mFiles[i].Name.LastIndexOf(".");
+                            string fileName = MovieController.mFiles[i].Name.Substring(0, indexExtension) + SubtitleController.mFiles[i].Extension;
+                            string path = SubtitleController.mFiles[i].DirectoryName + "\\" + fileName;
+
+                            SubtitleController.mFiles[i].MoveTo(path);
+                            SubtitleList.Items.RemoveAt(i);
+                            SubtitleList.Items.Insert(i, fileName);
                             progressBar.PerformStep();
                         }
-                        
+
                         Label_status.Text = "변환 완료";
                         progressBar.Value = 0;
                     }
@@ -190,7 +54,9 @@ namespace SubtitleRenamer
                 }
                 else
                     Label_status.Text = "파일이 선택되지 않았습니다";
-            }catch(Exception err){
+            }
+            catch (Exception err)
+            {
                 MessageBox.Show(err.ToString());
             }
 #if DEBUG
@@ -199,5 +65,133 @@ namespace SubtitleRenamer
 #endif
         }
 
+        private void listBox_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void listBox_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] droppedFiles = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            string[] AddedList;
+
+            if (sender.Equals(MovieList))
+            {   //영상파일 리스트의 경우
+                AddedList = MovieController.AddList(droppedFiles);
+
+                foreach (var movie in AddedList)
+                    MovieList.Items.Add(movie);
+            }
+            else if (sender.Equals(SubtitleList))
+            {   //자막파일 리스트의 경우
+                AddedList = SubtitleController.AddList(droppedFiles);
+
+                foreach (var subtitle in AddedList)
+                    SubtitleList.Items.Add(subtitle);
+            }
+            else
+            {
+                Label_status.Text = "Error 01: listBox_DragDrop Exception";
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+#if DEBUG
+            label3.Visible = true;
+#endif
+        }
+
+        private void movieSortingChanged(object sender, EventArgs e)
+        {
+            if (MovieSortingButton.Checked)
+                MovieList.Sorted = true;
+            else
+                MovieList.Sorted = false;
+        }
+
+        private void subtitleSortingChanged(object sender, EventArgs e)
+        {
+            if (SubtitleSortingButton.Checked)
+                SubtitleList.Sorted = true;
+            else
+                SubtitleList.Sorted = false;
+        }
+
+        private void resetMovieList(object sender, EventArgs e)
+        {
+            SubtitleList.Items.Clear();
+            SubtitleController.Clear();
+        }
+
+        private void resetSubtitleList(object sender, EventArgs e)
+        {
+            SubtitleList.Items.Clear();
+            SubtitleController.Clear();
+        }
+
+        private void movieButtonUp(object sender, EventArgs e)
+        {
+            if (MovieList.SelectedIndex < 1)
+                return;
+            if (MovieSortingButton.Checked == true)
+                MovieSortingButton.Checked = false;
+
+            string tmp = (string)MovieList.SelectedItem;
+            int indexSelected = MovieList.SelectedIndex;
+            int indexPrev = indexSelected - 1;
+
+            MovieList.Items.RemoveAt(indexSelected);
+            MovieList.Items.Insert(indexPrev, tmp);
+            MovieList.SetSelected(indexPrev, true);
+        }
+
+        private void movieButtonDown(object sender, EventArgs e)
+        {
+            if (MovieList.SelectedIndex >= MovieList.Items.Count - 1)
+                return;
+            if (MovieSortingButton.Checked == true)
+                MovieSortingButton.Checked = false;
+
+            string tmp = (string)MovieList.SelectedItem;
+            int indexSelected = MovieList.SelectedIndex;
+            int indexNext = indexSelected + 1;
+
+            MovieList.Items.RemoveAt(indexSelected);
+            MovieList.Items.Insert(indexNext, tmp);
+            MovieList.SetSelected(indexNext, true);
+        }
+
+        private void subtitleButtonUp(object sender, EventArgs e)
+        {
+            if (SubtitleList.SelectedIndex < 1)
+                return;
+            if (SubtitleSortingButton.Checked == true)
+                SubtitleSortingButton.Checked = false;
+
+            string tmp = (string)SubtitleList.SelectedItem;
+            int indexSelected = SubtitleList.SelectedIndex;
+            int indexPrev = indexSelected - 1;
+
+            SubtitleList.Items.RemoveAt(indexSelected);
+            SubtitleList.Items.Insert(indexPrev, tmp);
+            SubtitleList.SetSelected(indexPrev, true);
+        }
+
+        private void subtitleButtonDown(object sender, EventArgs e)
+        {
+            if (SubtitleList.SelectedIndex >= SubtitleList.Items.Count - 1)
+                return;
+            if (SubtitleSortingButton.Checked == true)
+                SubtitleSortingButton.Checked = false;
+
+            string tmp = (string)SubtitleList.SelectedItem;
+            int indexSelected = SubtitleList.SelectedIndex;
+            int indexNext = indexSelected + 1;
+
+            SubtitleList.Items.RemoveAt(indexSelected);
+            SubtitleList.Items.Insert(indexNext, tmp);
+            SubtitleList.SetSelected(indexNext, true);
+        }
     }
 }

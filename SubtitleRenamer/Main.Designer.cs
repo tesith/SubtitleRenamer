@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SubtitleRenamer));
-            this.listBoxMovie = new System.Windows.Forms.ListBox();
+            this.MovieList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.listBoxSubtitle = new System.Windows.Forms.ListBox();
+            this.SubtitleList = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.MovieSortingButton = new System.Windows.Forms.CheckBox();
+            this.SubtitleSortingButton = new System.Windows.Forms.CheckBox();
             this.button_reset_listbox1 = new System.Windows.Forms.Button();
             this.button_reset_listbox2 = new System.Windows.Forms.Button();
             this.button_progress = new System.Windows.Forms.Button();
@@ -47,20 +47,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // listBoxMovie
+            // MovieList
             // 
-            this.listBoxMovie.AllowDrop = true;
-            this.listBoxMovie.FormattingEnabled = true;
-            this.listBoxMovie.HorizontalScrollbar = true;
-            this.listBoxMovie.ItemHeight = 12;
-            this.listBoxMovie.Location = new System.Drawing.Point(14, 25);
-            this.listBoxMovie.Name = "listBoxMovie";
-            this.listBoxMovie.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxMovie.Size = new System.Drawing.Size(328, 256);
-            this.listBoxMovie.Sorted = true;
-            this.listBoxMovie.TabIndex = 0;
-            this.listBoxMovie.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
-            this.listBoxMovie.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
+            this.MovieList.AllowDrop = true;
+            this.MovieList.FormattingEnabled = true;
+            this.MovieList.HorizontalScrollbar = true;
+            this.MovieList.ItemHeight = 12;
+            this.MovieList.Location = new System.Drawing.Point(14, 25);
+            this.MovieList.Name = "MovieList";
+            this.MovieList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.MovieList.Size = new System.Drawing.Size(328, 256);
+            this.MovieList.Sorted = true;
+            this.MovieList.TabIndex = 0;
+            this.MovieList.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
+            this.MovieList.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             // 
             // label1
             // 
@@ -71,20 +71,20 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "자막파일";
             // 
-            // listBoxSubtitle
+            // SubtitleList
             // 
-            this.listBoxSubtitle.AllowDrop = true;
-            this.listBoxSubtitle.FormattingEnabled = true;
-            this.listBoxSubtitle.HorizontalScrollbar = true;
-            this.listBoxSubtitle.ItemHeight = 12;
-            this.listBoxSubtitle.Location = new System.Drawing.Point(348, 25);
-            this.listBoxSubtitle.Name = "listBoxSubtitle";
-            this.listBoxSubtitle.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxSubtitle.Size = new System.Drawing.Size(330, 256);
-            this.listBoxSubtitle.Sorted = true;
-            this.listBoxSubtitle.TabIndex = 3;
-            this.listBoxSubtitle.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
-            this.listBoxSubtitle.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
+            this.SubtitleList.AllowDrop = true;
+            this.SubtitleList.FormattingEnabled = true;
+            this.SubtitleList.HorizontalScrollbar = true;
+            this.SubtitleList.ItemHeight = 12;
+            this.SubtitleList.Location = new System.Drawing.Point(348, 25);
+            this.SubtitleList.Name = "SubtitleList";
+            this.SubtitleList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.SubtitleList.Size = new System.Drawing.Size(330, 256);
+            this.SubtitleList.Sorted = true;
+            this.SubtitleList.TabIndex = 3;
+            this.SubtitleList.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBox_DragDrop);
+            this.SubtitleList.DragOver += new System.Windows.Forms.DragEventHandler(this.listBox_DragOver);
             // 
             // label2
             // 
@@ -95,31 +95,31 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "영상파일";
             // 
-            // checkBox1
+            // MovieSortingButton
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(204, 291);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 16);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.Text = "자동정렬";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            this.MovieSortingButton.AutoSize = true;
+            this.MovieSortingButton.Checked = true;
+            this.MovieSortingButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.MovieSortingButton.Location = new System.Drawing.Point(204, 291);
+            this.MovieSortingButton.Name = "MovieSortingButton";
+            this.MovieSortingButton.Size = new System.Drawing.Size(72, 16);
+            this.MovieSortingButton.TabIndex = 7;
+            this.MovieSortingButton.Text = "자동정렬";
+            this.MovieSortingButton.UseVisualStyleBackColor = true;
+            this.MovieSortingButton.CheckedChanged += new System.EventHandler(this.movieSortingChanged);
             // 
-            // checkBox2
+            // SubtitleSortingButton
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(540, 291);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(72, 16);
-            this.checkBox2.TabIndex = 8;
-            this.checkBox2.Text = "자동정렬";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChanged);
+            this.SubtitleSortingButton.AutoSize = true;
+            this.SubtitleSortingButton.Checked = true;
+            this.SubtitleSortingButton.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SubtitleSortingButton.Location = new System.Drawing.Point(540, 291);
+            this.SubtitleSortingButton.Name = "SubtitleSortingButton";
+            this.SubtitleSortingButton.Size = new System.Drawing.Size(72, 16);
+            this.SubtitleSortingButton.TabIndex = 8;
+            this.SubtitleSortingButton.Text = "자동정렬";
+            this.SubtitleSortingButton.UseVisualStyleBackColor = true;
+            this.SubtitleSortingButton.CheckedChanged += new System.EventHandler(this.subtitleSortingChanged);
             // 
             // button_reset_listbox1
             // 
@@ -129,7 +129,7 @@
             this.button_reset_listbox1.TabIndex = 9;
             this.button_reset_listbox1.Text = "초기화";
             this.button_reset_listbox1.UseVisualStyleBackColor = true;
-            this.button_reset_listbox1.Click += new System.EventHandler(this.button_reset_Click);
+            this.button_reset_listbox1.Click += new System.EventHandler(this.resetMovieList);
             // 
             // button_reset_listbox2
             // 
@@ -139,7 +139,7 @@
             this.button_reset_listbox2.TabIndex = 10;
             this.button_reset_listbox2.Text = "초기화";
             this.button_reset_listbox2.UseVisualStyleBackColor = true;
-            this.button_reset_listbox2.Click += new System.EventHandler(this.button_reset_Click);
+            this.button_reset_listbox2.Click += new System.EventHandler(this.resetSubtitleList);
             // 
             // button_progress
             // 
@@ -177,7 +177,7 @@
             this.button_mov_list_up.TabIndex = 16;
             this.button_mov_list_up.Text = "↑";
             this.button_mov_list_up.UseVisualStyleBackColor = true;
-            this.button_mov_list_up.Click += new System.EventHandler(this.button_listupdown);
+            this.button_mov_list_up.Click += new System.EventHandler(this.movieButtonUp);
             // 
             // button_mov_list_down
             // 
@@ -187,7 +187,7 @@
             this.button_mov_list_down.TabIndex = 17;
             this.button_mov_list_down.Text = "↓";
             this.button_mov_list_down.UseVisualStyleBackColor = true;
-            this.button_mov_list_down.Click += new System.EventHandler(this.button_listupdown);
+            this.button_mov_list_down.Click += new System.EventHandler(this.movieButtonDown);
             // 
             // button_sub_list_up
             // 
@@ -197,7 +197,7 @@
             this.button_sub_list_up.TabIndex = 18;
             this.button_sub_list_up.Text = "↑";
             this.button_sub_list_up.UseVisualStyleBackColor = true;
-            this.button_sub_list_up.Click += new System.EventHandler(this.button_listupdown);
+            this.button_sub_list_up.Click += new System.EventHandler(this.subtitleButtonUp);
             // 
             // button_sub_list_down
             // 
@@ -207,7 +207,7 @@
             this.button_sub_list_down.TabIndex = 19;
             this.button_sub_list_down.Text = "↓";
             this.button_sub_list_down.UseVisualStyleBackColor = true;
-            this.button_sub_list_down.Click += new System.EventHandler(this.button_listupdown);
+            this.button_sub_list_down.Click += new System.EventHandler(this.subtitleButtonDown);
             // 
             // label3
             // 
@@ -234,19 +234,18 @@
             this.Controls.Add(this.button_progress);
             this.Controls.Add(this.button_reset_listbox2);
             this.Controls.Add(this.button_reset_listbox1);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.SubtitleSortingButton);
+            this.Controls.Add(this.MovieSortingButton);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listBoxSubtitle);
+            this.Controls.Add(this.SubtitleList);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listBoxMovie);
+            this.Controls.Add(this.MovieList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "SubtitleRenamer";
-            this.Text = "Subtitle Renamer v1.3";
+            this.Text = "Subtitle Renamer v1.3.1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Click += new System.EventHandler(this.button_listupdown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,10 +254,10 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listBoxSubtitle;
+        private System.Windows.Forms.ListBox SubtitleList;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox MovieSortingButton;
+        private System.Windows.Forms.CheckBox SubtitleSortingButton;
         private System.Windows.Forms.Button button_reset_listbox1;
         private System.Windows.Forms.Button button_reset_listbox2;
         private System.Windows.Forms.Button button_progress;
@@ -268,7 +267,7 @@
         private System.Windows.Forms.Button button_mov_list_down;
         private System.Windows.Forms.Button button_sub_list_up;
         private System.Windows.Forms.Button button_sub_list_down;
-        private System.Windows.Forms.ListBox listBoxMovie;
+        private System.Windows.Forms.ListBox MovieList;
         private System.Windows.Forms.Label label3;
     }
 }

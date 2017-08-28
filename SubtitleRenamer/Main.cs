@@ -120,8 +120,8 @@ namespace SubtitleRenamer
 
         private void resetMovieList(object sender, EventArgs e)
         {
-            SubtitleList.Items.Clear();
-            SubtitleController.Clear();
+            MovieList.Items.Clear();
+            MovieController.Clear();
         }
 
         private void resetSubtitleList(object sender, EventArgs e)

@@ -1,4 +1,4 @@
-#SubtitleRenamer v1.3.1
+#SubtitleRenamer
 
 ####동영상파일에 맞춰 자막파일의 이름을 변경해주는 프로그램 입니다
 

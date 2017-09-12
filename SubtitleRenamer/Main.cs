@@ -32,6 +32,8 @@ namespace SubtitleRenamer
                     {
                         MovieController.Sync(MovieList);
                         SubtitleController.Sync(SubtitleList);
+
+                        progressBar.Value = 0;
                         progressBar.Maximum = MovieList.Items.Count;
 
                         for (int i = 0; i < MovieController.mFiles.Length; ++i)
@@ -43,11 +45,10 @@ namespace SubtitleRenamer
                             SubtitleController.mFiles[i].MoveTo(path);
                             SubtitleList.Items.RemoveAt(i);
                             SubtitleList.Items.Insert(i, fileName);
-                            progressBar.PerformStep();
+                            progressBar.Value++;
                         }
 
                         Label_status.Text = "변환 완료";
-                        progressBar.Value = 0;
                     }
                     else
                         Label_status.Text = "양쪽 파일의 개수가 일치해야 합니다";

@@ -12,8 +12,8 @@ namespace SubtitleRenamer
         public SubtitleRenamer()
         {
             InitializeComponent();
-            MovieController = new ListboxController();
-            SubtitleController = new ListboxController();
+            MovieController = new ListboxController(MovieList);
+            SubtitleController = new ListboxController(SubtitleList);
         }
 
         private void button_progress_Click(object sender, EventArgs e)
@@ -30,21 +30,19 @@ namespace SubtitleRenamer
                     // 파일 개수 일치 확인
                     if (MovieList.Items.Count == SubtitleList.Items.Count)
                     {
-                        MovieController.Sync(MovieList);
-                        SubtitleController.Sync(SubtitleList);
-
                         progressBar.Value = 0;
                         progressBar.Maximum = MovieList.Items.Count;
 
-                        for (int i = 0; i < MovieController.mFiles.Length; ++i)
+                        for (int i = 0; i < MovieController.List.Count; ++i)
                         {
-                            int indexExtension = MovieController.mFiles[i].Name.LastIndexOf(".");
-                            string fileName = MovieController.mFiles[i].Name.Substring(0, indexExtension) + SubtitleController.mFiles[i].Extension;
-                            string path = SubtitleController.mFiles[i].DirectoryName + "\\" + fileName;
+                            int indexExtension = MovieController.List[i].fi.Name.LastIndexOf(".");
+                            string fileName = MovieController.List[i].fi.Name.Substring(0, indexExtension) + SubtitleController.List[i].fi.Extension;
+                            string path = SubtitleController.List[i].fi.DirectoryName + "\\" + fileName;
 
-                            SubtitleController.mFiles[i].MoveTo(path);
-                            SubtitleList.Items.RemoveAt(i);
-                            SubtitleList.Items.Insert(i, fileName);
+                            SubtitleController.List[i].fi.MoveTo(path);
+                            SubtitleController.List[i].fi.Refresh();
+                            //SubtitleList.Items.RemoveAt(i);
+                            //SubtitleList.Items.Insert(i, fileName);
                             progressBar.Value++;
                         }
 
@@ -74,21 +72,14 @@ namespace SubtitleRenamer
         private void listBox_DragDrop(object sender, DragEventArgs e)
         {
             string[] droppedFiles = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            string[] AddedList;
 
             if (sender.Equals(MovieList))
             {   //영상파일 리스트의 경우
-                AddedList = MovieController.AddList(droppedFiles);
-
-                foreach (var movie in AddedList)
-                    MovieList.Items.Add(movie);
+                MovieController.AddList(droppedFiles);
             }
             else if (sender.Equals(SubtitleList))
             {   //자막파일 리스트의 경우
-                AddedList = SubtitleController.AddList(droppedFiles);
-
-                foreach (var subtitle in AddedList)
-                    SubtitleList.Items.Add(subtitle);
+                SubtitleController.AddList(droppedFiles);
             }
             else
             {
@@ -113,6 +104,7 @@ namespace SubtitleRenamer
 
         private void subtitleSortingChanged(object sender, EventArgs e)
         {
+            SubtitleController.List.
             if (SubtitleSortingButton.Checked)
                 SubtitleList.Sorted = true;
             else
@@ -121,78 +113,46 @@ namespace SubtitleRenamer
 
         private void resetMovieList(object sender, EventArgs e)
         {
-            MovieList.Items.Clear();
             MovieController.Clear();
         }
 
         private void resetSubtitleList(object sender, EventArgs e)
         {
-            SubtitleList.Items.Clear();
             SubtitleController.Clear();
+        }
+
+        private void ProcessUpDownButton(ListBox list, ListboxController controller, CheckBox SortButton, bool bUp)
+        {
+            int indexSelected = list.SelectedIndex;
+            int indexPrev = indexSelected + ( bUp ? -1 : 1 );
+
+            if (controller.Swap(indexPrev, indexSelected) )
+            {
+                list.SetSelected(indexPrev, true);
+                list.SetSelected(indexSelected, false);
+                if (SortButton.Checked == true)
+                    SortButton.Checked = false;
+            }
         }
 
         private void movieButtonUp(object sender, EventArgs e)
         {
-            if (MovieList.SelectedIndex < 1)
-                return;
-            if (MovieSortingButton.Checked == true)
-                MovieSortingButton.Checked = false;
-
-            string tmp = (string)MovieList.SelectedItem;
-            int indexSelected = MovieList.SelectedIndex;
-            int indexPrev = indexSelected - 1;
-
-            MovieList.Items.RemoveAt(indexSelected);
-            MovieList.Items.Insert(indexPrev, tmp);
-            MovieList.SetSelected(indexPrev, true);
+            ProcessUpDownButton(MovieList, MovieController, MovieSortingButton, true);
         }
 
         private void movieButtonDown(object sender, EventArgs e)
         {
-            if (MovieList.SelectedIndex >= MovieList.Items.Count - 1)
-                return;
-            if (MovieSortingButton.Checked == true)
-                MovieSortingButton.Checked = false;
-
-            string tmp = (string)MovieList.SelectedItem;
-            int indexSelected = MovieList.SelectedIndex;
-            int indexNext = indexSelected + 1;
-
-            MovieList.Items.RemoveAt(indexSelected);
-            MovieList.Items.Insert(indexNext, tmp);
-            MovieList.SetSelected(indexNext, true);
+            ProcessUpDownButton(MovieList, MovieController, MovieSortingButton, false);
         }
 
         private void subtitleButtonUp(object sender, EventArgs e)
         {
-            if (SubtitleList.SelectedIndex < 1)
-                return;
-            if (SubtitleSortingButton.Checked == true)
-                SubtitleSortingButton.Checked = false;
-
-            string tmp = (string)SubtitleList.SelectedItem;
-            int indexSelected = SubtitleList.SelectedIndex;
-            int indexPrev = indexSelected - 1;
-
-            SubtitleList.Items.RemoveAt(indexSelected);
-            SubtitleList.Items.Insert(indexPrev, tmp);
-            SubtitleList.SetSelected(indexPrev, true);
+            ProcessUpDownButton(SubtitleList, SubtitleController, SubtitleSortingButton, true);
         }
 
         private void subtitleButtonDown(object sender, EventArgs e)
         {
-            if (SubtitleList.SelectedIndex >= SubtitleList.Items.Count - 1)
-                return;
-            if (SubtitleSortingButton.Checked == true)
-                SubtitleSortingButton.Checked = false;
-
-            string tmp = (string)SubtitleList.SelectedItem;
-            int indexSelected = SubtitleList.SelectedIndex;
-            int indexNext = indexSelected + 1;
-
-            SubtitleList.Items.RemoveAt(indexSelected);
-            SubtitleList.Items.Insert(indexNext, tmp);
-            SubtitleList.SetSelected(indexNext, true);
+            ProcessUpDownButton(SubtitleList, SubtitleController, SubtitleSortingButton, false);
         }
     }
 }
